@@ -1,0 +1,96 @@
+@font-face {
+  font-family: "DistrictThin";
+  src: url(../fonts/districthin.ttf);
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+}
+
+#wrapper-bg {
+  position: fixed;
+  z-index: 10;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 50px;
+  overflow: auto;
+  background-color: white;
+  backdrop-filter: blur(5px);
+}
+
+.scroll {
+  height: 100vh;
+  overflow-y: auto;
+}
+
+/* Header */
+#title {
+  margin: 0;
+  font-size: 2.5em;
+}
+
+.fa-facebook-square {
+  color: #0f90f3;
+}
+
+.fa-user {
+  color: #0f90f3;
+}
+
+.user-post-icon {
+  position: relative;
+  top: 9%;
+  left: 25%;
+  transform: translate(-9%, -25%);
+}
+
+.post:last-of-type {
+  margin-bottom: 5em;
+}
+
+/* Reacts */
+
+.like-hover:hover {
+  cursor: pointer;
+  color: #0f90f3;
+}
+
+.dislike-hover:hover {
+  cursor: pointer;
+  color: lightcoral;
+}
+
+.heart-hover:hover {
+  cursor: pointer;
+  color: #f92480;
+}
+
+.birthdays-list, .friends-list {
+  list-style: none;
+}
+
+.friends {
+  position: absolute;
+  bottom: 0px;
+}
+
+.margin-b {
+    margin-bottom: 7em;
+}
+
+
+.form-check-input:checked {
+    background-color: lightgreen;
+    border-color: lightgreen;
+}
+
+.form-switch .form-check-input {
+  background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='-4 -4 8 8'%3e%3ccircle r='3' fill='grey'/%3e%3c/svg%3e");
+}
+
+.fa-circle {
+    color: lightgreen;
+}

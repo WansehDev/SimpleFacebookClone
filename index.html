@@ -1,0 +1,156 @@
+<html lang="en" ng-app="newsFeedApp">
+    <head>
+        <title>Facebook NewsFeed</title>
+        <!-- Bootstrap and Styles-->
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet"
+            integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+        <link rel="stylesheet" href="stylesheets/style.css">
+
+        <!-- Font Awesome Kit -->
+        <script src="https://kit.fontawesome.com/f179fb6516.js" crossorigin="anonymous"></script>
+
+
+        <!-- Moment JS -->
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.3/moment.min.js"></script>
+    
+        <!-- Angular JS and Scripts-->
+        <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular.min.js"></script>
+        <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.14/angular-route.min.js"></script>
+        <script src="script.js"></script>
+    </head>
+    <body id="wrapper-bg" >
+        <header class="container-fluid p-2 shadow">
+            <div class="row">
+                <div class="col d-flex flex-row">
+                    <i class="fa-brands fa-facebook-square fa-3x me-1"></i><h1 id="title" class="fw-bolder d-none d-sm-block d-sm-none d-md-block d-md-none d-lg-block">Facebook</h1>
+                    <!-- Mobile -->
+                    <nav class="nav d-lg-none d-xl-block d-xl-none d-xxl-block d-xxl-none w-100">
+                        <a class="nav-link d-inline-block align-middle" href="#">Your Group</a>
+                        <a class="nav-link d-inline-block align-middle" href="#">Friends</a>
+                     </nav>
+                     <!-- Mobile end -->
+                </div>
+                <div class="col-2 d-flex flex-row justify-content-end">
+                    <span class="align-middle"><i class="fa-solid fa-user fa-2x mt-2"></i></span>
+                    <span class="fw-bolder user-name ms-2 align-middle fs-4 mt-1 mb-1 d-none d-sm-block d-sm-none d-md-block text-nowrap">Lance Parantar</span>
+                </div>
+            </div>
+        </header>
+        <main class="container-fluid mt-3 d-flex flex-row justify-content-end scroll">
+            <!-- Groupings Div Start -->
+            <div class="shadow container-sm p-3 w-25 d-none d-sm-block d-sm-none d-md-block d-md-none d-lg-block sticky-sm-top" ng-controller="groupController">
+                <h3>Your Group</h3>
+
+
+                <!-- Add Group -->
+                <input type="text" class="form-control mb-2 shadow-none" placeholder="Group Name" ng-model="group_name">
+                <button type="button" class="btn btn-outline-primary mb-3 w-100 shadow-none" ng-click="addGroup()">Create New Group</button>
+                <!-- Add Group End -->
+
+                <!-- Checkboxed Group -->
+                <div class="form-check" ng-repeat="group in groups">
+                    <input class="form-check-input shadow-none" type="checkbox" id="flexCheckDefault" ng-click="markedGroup(group)">
+                    <label class="form-check-label" for="flexCheckDefault">
+                        {{group}}
+                    </label>
+                </div>
+    
+                <button type="button" class="btn btn-outline-danger mt-2 w-100 shadow-none" ng-click="deleteGroups()">Delete Marked Group</button>
+                <!-- Checkboxed Group End -->
+                {{msg}}
+            </div>
+            <!-- Group Div End -->
+
+            <!-- Post Div Start -->
+            <div class="container p-4" ng-controller="postController">
+                <!-- Post Control -->
+                <div class="row mb-4">
+                    <div class="col">
+                        <div class="row">
+                            <div class="col-1">
+                                <i class="fa-solid fa-user fa-2x user-post-icon"></i>
+                            </div>
+                            <div class="col"> 
+                                <div class="form-floating">
+                                    <textarea class="form-control"  placeholder="Leave a comment here" id="floatingTextarea" style="height: 100px" ng-model="content" ></textarea>
+                                    <label for="floatingTextarea">Comments</label>
+                               </div>
+                               <button class="btn btn-outline-secondary shadow-none mt-2 float-end w-25" ng-click="addPost()">Post</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- Post Control End -->
+
+                <!-- Posts by Users -->
+                <div class="row">
+                    <div class="col">
+                        <div class="row post" ng-repeat="post in posts | orderBy: '-'" >
+                            <div class="col-1">
+                                <i class="fa-solid fa-user fa-2x user-post-icon"></i>
+                            </div>
+                            <div class="col">
+                                <div class="card mb-2">
+                                    <div class="card-body">
+                                        <h5 class="card-title">{{post.user}}</h5>
+                                        <p class="card-text">{{post.content}}</p>
+                                        <p class="card-text"><small class="text-muted">{{post.time}}</small></p>
+                                        <div class="container-fluid p-0 d-flex">
+                                            <i class="fas fa-thumbs-up me-3 like-hover" ng-click="addLikes(post.id)">
+                                                <span class="fw-normal ms-1">
+                                                    {{post.likes}}
+                                                </span>
+                                            </i>
+                                       
+                                            <i class="fas fa-thumbs-down me-3 dislike-hover"  ng-click="addDislikes(post.id)">
+                                                <span class="fw-normal ms-1">
+                                                    {{post.dislikes}}
+                                                </span>
+                                            </i>
+
+                                            <i class="fas fa-heart hover me-3 heart-hover" ng-click="addHearts(post.id)">
+                                                <span class="fw-normal ms-1">
+                                                    {{post.hearts}}
+                                                </span>
+                                            </i>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>  
+                    </div>
+                </div>
+            </div>
+            <!-- Post Div End -->
+
+            <!--  Friends and Birthday Div Start -->
+            <div class="container-fluid w-25 h-100 d-none d-sm-block d-sm-none d-md-block d-md-none d-lg-block sticky-sm-top p-0" >
+                <div class="container shadow border p-3" ng-controller="birthdayController">
+                    <h4>Birthdays</h4> 
+                    <ul class="birthdays-list p-0 text-nowrap">
+                        <li ng-repeat="user in users ">{{user.name.first + " " + user.name.last}}<i class="fa-solid fa-cake-candles float-end mt-1"></i></li>
+                    </ul>
+                </div>
+
+                <div class="container shadow border p-3 friends margin-b" ng-controller="friendsController">
+                    <ul class="friends-list p-0" ng-if="isToggled">
+                        <li class="mb-2 text-nowrap" ng-repeat="users in onlineUsers">
+                             {{users.name.first + " " + users.name.last}}
+                            <i class="fa-solid fa-circle float-end mt-1"></i>
+                        </li>
+                    </ul>
+                    <div class="d-flex flex-row">
+                        <span class="me-1 fs-5">Online({{countUsers}})</span>
+                        <div class="form-check form-switch mt-1">
+                            <input class="form-check-input shadow-none" type="checkbox" role="switch" id="flexSwitchCheckChecked"  ng-model="isToggled" checked>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- Friends and Birthday Div End -->
+
+        </main>
+        
+    </body>
+
+</html>
